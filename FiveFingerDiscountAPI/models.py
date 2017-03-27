@@ -22,24 +22,24 @@ class Card(models.Model):
 
 
 class Game(models.Model):
-	winner = models.ForeignKey(User)
+	winner = models.ForeignKey(User,related_name='game_winner')
 	rounds_to_win = models.IntegerField(default = 0)
 
 class Phase(models.Model):
-	game = models.ForeignKey(Game)
-	winner = models.ForeignKey(User)
+	game = models.ForeignKey(Game,related_name='phase_game')
+	winner = models.ForeignKey(User, related_name='phase_winner')
 
 class Score(models.Model):
-	game = models.ForeignKey(Game)
-	player = models.ForeignKey(User)
+	game = models.ForeignKey(Game,related_name='score_game')
+	player = models.ForeignKey(User, related_name='score_player')
 	score = models.IntegerField(default = 0)
 
 class Turn(models.Model):
-	phase = models.ForeignKey(Phase)
-	player = models.ForeignKey(User)
-	start_hand = models.ForeignKey(Card)
-	draw = models.ForeignKey(Card)
-	end_hand = models.ForeignKey(Card)
-	played = models.ForeignKey(Card)
-	target = models.ForeignKey(User)
+	phase = models.ForeignKey(Phase,related_name='turn_phase')
+	player = models.ForeignKey(User,related_name='turn_player')
+	start_hand = models.ForeignKey(Card, related_name='turn_card')
+	draw = models.ForeignKey(Card,related_name='turn_draw')
+	end_hand = models.ForeignKey(Card,related_name='turn_end_hand')
+	played = models.ForeignKey(Card,related_name='turn_played')
+	target = models.ForeignKey(User,related_name='turn_target')
 	eliminated = models.BooleanField()
