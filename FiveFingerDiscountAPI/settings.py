@@ -38,7 +38,13 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'FiveFingerDiscountAPI.apps.FiveFingerDiscountAPIConfig'
+    'FiveFingerDiscountAPI',
+    'users',
+    'games',
+    'phases',
+    'turns',
+    'scores',
+    'cards',
 )
 
 MIDDLEWARE_CLASSES = (
