@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'turns',
     'scores',
     'cards',
+    'players',
 )
 
 MIDDLEWARE_CLASSES = (

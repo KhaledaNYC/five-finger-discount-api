@@ -1,0 +1,1645 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.4
+-- Dumped by pg_dump version 9.5.4
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: schylerhosler
+--
+
+CREATE TABLE auth_group (
+    id integer NOT NULL,
+    name character varying(80) NOT NULL
+);
+
+
+ALTER TABLE auth_group OWNER TO schylerhosler;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: schylerhosler
+--
+
+CREATE SEQUENCE auth_group_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_group_id_seq OWNER TO schylerhosler;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: schylerhosler
+--
+
+ALTER SEQUENCE auth_group_id_seq OWNED BY auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: schylerhosler
+--
+
+CREATE TABLE auth_group_permissions (
+    id integer NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE auth_group_permissions OWNER TO schylerhosler;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: schylerhosler
+--
+
+CREATE SEQUENCE auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_group_permissions_id_seq OWNER TO schylerhosler;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: schylerhosler
+--
+
+ALTER SEQUENCE auth_group_permissions_id_seq OWNED BY auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: schylerhosler
+--
+
+CREATE TABLE auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE auth_permission OWNER TO schylerhosler;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: schylerhosler
+--
+
+CREATE SEQUENCE auth_permission_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_permission_id_seq OWNER TO schylerhosler;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: schylerhosler
+--
+
+ALTER SEQUENCE auth_permission_id_seq OWNED BY auth_permission.id;
+
+
+--
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: schylerhosler
+--
+
+CREATE TABLE auth_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    username character varying(30) NOT NULL,
+    first_name character varying(30) NOT NULL,
+    last_name character varying(30) NOT NULL,
+    email character varying(254) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE auth_user OWNER TO schylerhosler;
+
+--
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: schylerhosler
+--
+
+CREATE TABLE auth_user_groups (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE auth_user_groups OWNER TO schylerhosler;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: schylerhosler
+--
+
+CREATE SEQUENCE auth_user_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_user_groups_id_seq OWNER TO schylerhosler;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: schylerhosler
+--
+
+ALTER SEQUENCE auth_user_groups_id_seq OWNED BY auth_user_groups.id;
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: schylerhosler
+--
+
+CREATE SEQUENCE auth_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_user_id_seq OWNER TO schylerhosler;
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: schylerhosler
+--
+
+ALTER SEQUENCE auth_user_id_seq OWNED BY auth_user.id;
+
+
+--
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: schylerhosler
+--
+
+CREATE TABLE auth_user_user_permissions (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE auth_user_user_permissions OWNER TO schylerhosler;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: schylerhosler
+--
+
+CREATE SEQUENCE auth_user_user_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_user_user_permissions_id_seq OWNER TO schylerhosler;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: schylerhosler
+--
+
+ALTER SEQUENCE auth_user_user_permissions_id_seq OWNED BY auth_user_user_permissions.id;
+
+
+--
+-- Name: cards_card; Type: TABLE; Schema: public; Owner: schylerhosler
+--
+
+CREATE TABLE cards_card (
+    id integer NOT NULL,
+    name character varying(30) NOT NULL,
+    description character varying(30) NOT NULL,
+    rank integer NOT NULL,
+    image character varying(100) NOT NULL,
+    action character varying(30) NOT NULL
+);
+
+
+ALTER TABLE cards_card OWNER TO schylerhosler;
+
+--
+-- Name: cards_card_id_seq; Type: SEQUENCE; Schema: public; Owner: schylerhosler
+--
+
+CREATE SEQUENCE cards_card_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE cards_card_id_seq OWNER TO schylerhosler;
+
+--
+-- Name: cards_card_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: schylerhosler
+--
+
+ALTER SEQUENCE cards_card_id_seq OWNED BY cards_card.id;
+
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: schylerhosler
+--
+
+CREATE TABLE django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE django_admin_log OWNER TO schylerhosler;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: schylerhosler
+--
+
+CREATE SEQUENCE django_admin_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE django_admin_log_id_seq OWNER TO schylerhosler;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: schylerhosler
+--
+
+ALTER SEQUENCE django_admin_log_id_seq OWNED BY django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: schylerhosler
+--
+
+CREATE TABLE django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE django_content_type OWNER TO schylerhosler;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: schylerhosler
+--
+
+CREATE SEQUENCE django_content_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE django_content_type_id_seq OWNER TO schylerhosler;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: schylerhosler
+--
+
+ALTER SEQUENCE django_content_type_id_seq OWNED BY django_content_type.id;
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: schylerhosler
+--
+
+CREATE TABLE django_migrations (
+    id integer NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE django_migrations OWNER TO schylerhosler;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: schylerhosler
+--
+
+CREATE SEQUENCE django_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE django_migrations_id_seq OWNER TO schylerhosler;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: schylerhosler
+--
+
+ALTER SEQUENCE django_migrations_id_seq OWNED BY django_migrations.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: schylerhosler
+--
+
+CREATE TABLE django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE django_session OWNER TO schylerhosler;
+
+--
+-- Name: games_game; Type: TABLE; Schema: public; Owner: schylerhosler
+--
+
+CREATE TABLE games_game (
+    id integer NOT NULL,
+    rounds_to_win integer NOT NULL,
+    winner_id integer NOT NULL
+);
+
+
+ALTER TABLE games_game OWNER TO schylerhosler;
+
+--
+-- Name: games_game_id_seq; Type: SEQUENCE; Schema: public; Owner: schylerhosler
+--
+
+CREATE SEQUENCE games_game_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE games_game_id_seq OWNER TO schylerhosler;
+
+--
+-- Name: games_game_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: schylerhosler
+--
+
+ALTER SEQUENCE games_game_id_seq OWNED BY games_game.id;
+
+
+--
+-- Name: phases_phase; Type: TABLE; Schema: public; Owner: schylerhosler
+--
+
+CREATE TABLE phases_phase (
+    id integer NOT NULL,
+    game_id integer NOT NULL,
+    winner_id integer NOT NULL
+);
+
+
+ALTER TABLE phases_phase OWNER TO schylerhosler;
+
+--
+-- Name: phases_phase_id_seq; Type: SEQUENCE; Schema: public; Owner: schylerhosler
+--
+
+CREATE SEQUENCE phases_phase_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE phases_phase_id_seq OWNER TO schylerhosler;
+
+--
+-- Name: phases_phase_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: schylerhosler
+--
+
+ALTER SEQUENCE phases_phase_id_seq OWNED BY phases_phase.id;
+
+
+--
+-- Name: players_player; Type: TABLE; Schema: public; Owner: schylerhosler
+--
+
+CREATE TABLE players_player (
+    id integer NOT NULL,
+    game_id integer NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE players_player OWNER TO schylerhosler;
+
+--
+-- Name: players_player_id_seq; Type: SEQUENCE; Schema: public; Owner: schylerhosler
+--
+
+CREATE SEQUENCE players_player_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE players_player_id_seq OWNER TO schylerhosler;
+
+--
+-- Name: players_player_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: schylerhosler
+--
+
+ALTER SEQUENCE players_player_id_seq OWNED BY players_player.id;
+
+
+--
+-- Name: scores_score; Type: TABLE; Schema: public; Owner: schylerhosler
+--
+
+CREATE TABLE scores_score (
+    id integer NOT NULL,
+    score integer NOT NULL,
+    game_id integer NOT NULL,
+    player_id integer NOT NULL
+);
+
+
+ALTER TABLE scores_score OWNER TO schylerhosler;
+
+--
+-- Name: scores_score_id_seq; Type: SEQUENCE; Schema: public; Owner: schylerhosler
+--
+
+CREATE SEQUENCE scores_score_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE scores_score_id_seq OWNER TO schylerhosler;
+
+--
+-- Name: scores_score_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: schylerhosler
+--
+
+ALTER SEQUENCE scores_score_id_seq OWNED BY scores_score.id;
+
+
+--
+-- Name: turns_turn; Type: TABLE; Schema: public; Owner: schylerhosler
+--
+
+CREATE TABLE turns_turn (
+    id integer NOT NULL,
+    eliminated boolean NOT NULL,
+    draw_id integer NOT NULL,
+    end_hand_id integer NOT NULL,
+    phase_id integer NOT NULL,
+    played_id integer NOT NULL,
+    player_id integer NOT NULL,
+    start_hand_id integer NOT NULL,
+    target_id integer NOT NULL
+);
+
+
+ALTER TABLE turns_turn OWNER TO schylerhosler;
+
+--
+-- Name: turns_turn_id_seq; Type: SEQUENCE; Schema: public; Owner: schylerhosler
+--
+
+CREATE SEQUENCE turns_turn_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE turns_turn_id_seq OWNER TO schylerhosler;
+
+--
+-- Name: turns_turn_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: schylerhosler
+--
+
+ALTER SEQUENCE turns_turn_id_seq OWNED BY turns_turn.id;
+
+
+--
+-- Name: users_user; Type: TABLE; Schema: public; Owner: schylerhosler
+--
+
+CREATE TABLE users_user (
+    id integer NOT NULL,
+    username character varying(30) NOT NULL,
+    avatar character varying(100) NOT NULL
+);
+
+
+ALTER TABLE users_user OWNER TO schylerhosler;
+
+--
+-- Name: users_user_id_seq; Type: SEQUENCE; Schema: public; Owner: schylerhosler
+--
+
+CREATE SEQUENCE users_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE users_user_id_seq OWNER TO schylerhosler;
+
+--
+-- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: schylerhosler
+--
+
+ALTER SEQUENCE users_user_id_seq OWNED BY users_user.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_group ALTER COLUMN id SET DEFAULT nextval('auth_group_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_permission ALTER COLUMN id SET DEFAULT nextval('auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_user ALTER COLUMN id SET DEFAULT nextval('auth_user_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_user_groups ALTER COLUMN id SET DEFAULT nextval('auth_user_groups_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('auth_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY cards_card ALTER COLUMN id SET DEFAULT nextval('cards_card_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY django_admin_log ALTER COLUMN id SET DEFAULT nextval('django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY django_content_type ALTER COLUMN id SET DEFAULT nextval('django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY django_migrations ALTER COLUMN id SET DEFAULT nextval('django_migrations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY games_game ALTER COLUMN id SET DEFAULT nextval('games_game_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY phases_phase ALTER COLUMN id SET DEFAULT nextval('phases_phase_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY players_player ALTER COLUMN id SET DEFAULT nextval('players_player_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY scores_score ALTER COLUMN id SET DEFAULT nextval('scores_score_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY turns_turn ALTER COLUMN id SET DEFAULT nextval('turns_turn_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY users_user ALTER COLUMN id SET DEFAULT nextval('users_user_id_seq'::regclass);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: schylerhosler
+--
+
+COPY auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: schylerhosler
+--
+
+SELECT pg_catalog.setval('auth_group_id_seq', 1, false);
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: schylerhosler
+--
+
+COPY auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: schylerhosler
+--
+
+SELECT pg_catalog.setval('auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: schylerhosler
+--
+
+COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can add permission	2	add_permission
+5	Can change permission	2	change_permission
+6	Can delete permission	2	delete_permission
+7	Can add group	3	add_group
+8	Can change group	3	change_group
+9	Can delete group	3	delete_group
+10	Can add user	4	add_user
+11	Can change user	4	change_user
+12	Can delete user	4	delete_user
+13	Can add content type	5	add_contenttype
+14	Can change content type	5	change_contenttype
+15	Can delete content type	5	delete_contenttype
+16	Can add session	6	add_session
+17	Can change session	6	change_session
+18	Can delete session	6	delete_session
+19	Can add user	7	add_user
+20	Can change user	7	change_user
+21	Can delete user	7	delete_user
+22	Can add game	8	add_game
+23	Can change game	8	change_game
+24	Can delete game	8	delete_game
+25	Can add phase	9	add_phase
+26	Can change phase	9	change_phase
+27	Can delete phase	9	delete_phase
+28	Can add turn	10	add_turn
+29	Can change turn	10	change_turn
+30	Can delete turn	10	delete_turn
+31	Can add score	11	add_score
+32	Can change score	11	change_score
+33	Can delete score	11	delete_score
+34	Can add card	12	add_card
+35	Can change card	12	change_card
+36	Can delete card	12	delete_card
+37	Can add player	13	add_player
+38	Can change player	13	change_player
+39	Can delete player	13	delete_player
+\.
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: schylerhosler
+--
+
+SELECT pg_catalog.setval('auth_permission_id_seq', 39, true);
+
+
+--
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: schylerhosler
+--
+
+COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: schylerhosler
+--
+
+COPY auth_user_groups (id, user_id, group_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: schylerhosler
+--
+
+SELECT pg_catalog.setval('auth_user_groups_id_seq', 1, false);
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: schylerhosler
+--
+
+SELECT pg_catalog.setval('auth_user_id_seq', 1, false);
+
+
+--
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: schylerhosler
+--
+
+COPY auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: schylerhosler
+--
+
+SELECT pg_catalog.setval('auth_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Data for Name: cards_card; Type: TABLE DATA; Schema: public; Owner: schylerhosler
+--
+
+COPY cards_card (id, name, description, rank, image, action) FROM stdin;
+2	Goods Keeper	The one that holds the loot	8	http://	
+3	The Chicken	On parole...	7	http://	
+4	The Hacker		2	http://	
+5	The Con Artist		6	http://	
+6	The Muscle		1	http://	
+7	The Lookout		4	http://	
+8	The Loud-Mouth		3	http://	
+9	The Swapper		5	http://	
+10	The Hacker		2	http://	
+11	The Muscle		1	http://	
+12	The Muscle		1	http://	
+13	The Muscle		1	http://	
+14	The Muscle		1	http://	
+15	The Lookout		4	http://	
+16	The Loud-Mouth		3	http://	
+\.
+
+
+--
+-- Name: cards_card_id_seq; Type: SEQUENCE SET; Schema: public; Owner: schylerhosler
+--
+
+SELECT pg_catalog.setval('cards_card_id_seq', 16, true);
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: schylerhosler
+--
+
+COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+\.
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: schylerhosler
+--
+
+SELECT pg_catalog.setval('django_admin_log_id_seq', 1, false);
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: schylerhosler
+--
+
+COPY django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	permission
+3	auth	group
+4	auth	user
+5	contenttypes	contenttype
+6	sessions	session
+7	users	user
+8	games	game
+9	phases	phase
+10	turns	turn
+11	scores	score
+12	cards	card
+13	players	player
+\.
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: schylerhosler
+--
+
+SELECT pg_catalog.setval('django_content_type_id_seq', 13, true);
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: schylerhosler
+--
+
+COPY django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2017-03-29 18:37:46.511025-04
+2	auth	0001_initial	2017-03-29 18:37:46.590382-04
+3	admin	0001_initial	2017-03-29 18:37:46.614789-04
+4	contenttypes	0002_remove_content_type_name	2017-03-29 18:37:46.679559-04
+5	auth	0002_alter_permission_name_max_length	2017-03-29 18:37:46.696715-04
+6	auth	0003_alter_user_email_max_length	2017-03-29 18:37:46.712532-04
+7	auth	0004_alter_user_username_opts	2017-03-29 18:37:46.739812-04
+8	auth	0005_alter_user_last_login_null	2017-03-29 18:37:46.757701-04
+9	auth	0006_require_contenttypes_0002	2017-03-29 18:37:46.761956-04
+10	cards	0001_initial	2017-03-29 18:37:46.773075-04
+11	users	0001_initial	2017-03-29 18:37:46.792986-04
+12	games	0001_initial	2017-03-29 18:37:46.817318-04
+13	phases	0001_initial	2017-03-29 18:37:46.841262-04
+14	scores	0001_initial	2017-03-29 18:37:46.865901-04
+15	sessions	0001_initial	2017-03-29 18:37:46.892124-04
+16	turns	0001_initial	2017-03-29 18:37:46.935016-04
+17	players	0001_initial	2017-03-29 19:23:09.660246-04
+\.
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: schylerhosler
+--
+
+SELECT pg_catalog.setval('django_migrations_id_seq', 17, true);
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: schylerhosler
+--
+
+COPY django_session (session_key, session_data, expire_date) FROM stdin;
+\.
+
+
+--
+-- Data for Name: games_game; Type: TABLE DATA; Schema: public; Owner: schylerhosler
+--
+
+COPY games_game (id, rounds_to_win, winner_id) FROM stdin;
+2	0	1
+\.
+
+
+--
+-- Name: games_game_id_seq; Type: SEQUENCE SET; Schema: public; Owner: schylerhosler
+--
+
+SELECT pg_catalog.setval('games_game_id_seq', 2, true);
+
+
+--
+-- Data for Name: phases_phase; Type: TABLE DATA; Schema: public; Owner: schylerhosler
+--
+
+COPY phases_phase (id, game_id, winner_id) FROM stdin;
+\.
+
+
+--
+-- Name: phases_phase_id_seq; Type: SEQUENCE SET; Schema: public; Owner: schylerhosler
+--
+
+SELECT pg_catalog.setval('phases_phase_id_seq', 1, false);
+
+
+--
+-- Data for Name: players_player; Type: TABLE DATA; Schema: public; Owner: schylerhosler
+--
+
+COPY players_player (id, game_id, user_id) FROM stdin;
+1	2	1
+2	2	2
+\.
+
+
+--
+-- Name: players_player_id_seq; Type: SEQUENCE SET; Schema: public; Owner: schylerhosler
+--
+
+SELECT pg_catalog.setval('players_player_id_seq', 2, true);
+
+
+--
+-- Data for Name: scores_score; Type: TABLE DATA; Schema: public; Owner: schylerhosler
+--
+
+COPY scores_score (id, score, game_id, player_id) FROM stdin;
+\.
+
+
+--
+-- Name: scores_score_id_seq; Type: SEQUENCE SET; Schema: public; Owner: schylerhosler
+--
+
+SELECT pg_catalog.setval('scores_score_id_seq', 1, false);
+
+
+--
+-- Data for Name: turns_turn; Type: TABLE DATA; Schema: public; Owner: schylerhosler
+--
+
+COPY turns_turn (id, eliminated, draw_id, end_hand_id, phase_id, played_id, player_id, start_hand_id, target_id) FROM stdin;
+\.
+
+
+--
+-- Name: turns_turn_id_seq; Type: SEQUENCE SET; Schema: public; Owner: schylerhosler
+--
+
+SELECT pg_catalog.setval('turns_turn_id_seq', 1, false);
+
+
+--
+-- Data for Name: users_user; Type: TABLE DATA; Schema: public; Owner: schylerhosler
+--
+
+COPY users_user (id, username, avatar) FROM stdin;
+1	khaledanyc	http://
+2	schyler	http://
+\.
+
+
+--
+-- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: schylerhosler
+--
+
+SELECT pg_catalog.setval('users_user_id_seq', 2, true);
+
+
+--
+-- Name: auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions_group_id_permission_id_key; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_key UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission_content_type_id_codename_key; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_key UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups_user_id_group_id_key; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_group_id_key UNIQUE (user_id, group_id);
+
+
+--
+-- Name: auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_user
+    ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions_user_id_permission_id_key; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_key UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_user
+    ADD CONSTRAINT auth_user_username_key UNIQUE (username);
+
+
+--
+-- Name: cards_card_pkey; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY cards_card
+    ADD CONSTRAINT cards_card_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type_app_label_45f3b1d93ec8c61c_uniq; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY django_content_type
+    ADD CONSTRAINT django_content_type_app_label_45f3b1d93ec8c61c_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: games_game_pkey; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY games_game
+    ADD CONSTRAINT games_game_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: phases_phase_pkey; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY phases_phase
+    ADD CONSTRAINT phases_phase_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: players_player_pkey; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY players_player
+    ADD CONSTRAINT players_player_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: scores_score_pkey; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY scores_score
+    ADD CONSTRAINT scores_score_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: turns_turn_pkey; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY turns_turn
+    ADD CONSTRAINT turns_turn_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user_pkey; Type: CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY users_user
+    ADD CONSTRAINT users_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group_name_253ae2a6331666e8_like; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX auth_group_name_253ae2a6331666e8_like ON auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_0e939a4f; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX auth_group_permissions_0e939a4f ON auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_8373b171; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX auth_group_permissions_8373b171 ON auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_417f1b1c; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX auth_permission_417f1b1c ON auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: auth_user_groups_0e939a4f; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX auth_user_groups_0e939a4f ON auth_user_groups USING btree (group_id);
+
+
+--
+-- Name: auth_user_groups_e8701ad4; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX auth_user_groups_e8701ad4 ON auth_user_groups USING btree (user_id);
+
+
+--
+-- Name: auth_user_user_permissions_8373b171; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX auth_user_user_permissions_8373b171 ON auth_user_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_user_user_permissions_e8701ad4; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX auth_user_user_permissions_e8701ad4 ON auth_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: auth_user_username_51b3b110094b8aae_like; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX auth_user_username_51b3b110094b8aae_like ON auth_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: django_admin_log_417f1b1c; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX django_admin_log_417f1b1c ON django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_e8701ad4; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX django_admin_log_e8701ad4 ON django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_de54fa62; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX django_session_de54fa62 ON django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_461cfeaa630ca218_like; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX django_session_session_key_461cfeaa630ca218_like ON django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: games_game_c8ac5278; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX games_game_c8ac5278 ON games_game USING btree (winner_id);
+
+
+--
+-- Name: phases_phase_6072f8b3; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX phases_phase_6072f8b3 ON phases_phase USING btree (game_id);
+
+
+--
+-- Name: phases_phase_c8ac5278; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX phases_phase_c8ac5278 ON phases_phase USING btree (winner_id);
+
+
+--
+-- Name: players_player_6072f8b3; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX players_player_6072f8b3 ON players_player USING btree (game_id);
+
+
+--
+-- Name: players_player_e8701ad4; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX players_player_e8701ad4 ON players_player USING btree (user_id);
+
+
+--
+-- Name: scores_score_6072f8b3; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX scores_score_6072f8b3 ON scores_score USING btree (game_id);
+
+
+--
+-- Name: scores_score_afe72417; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX scores_score_afe72417 ON scores_score USING btree (player_id);
+
+
+--
+-- Name: turns_turn_103b3d25; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX turns_turn_103b3d25 ON turns_turn USING btree (end_hand_id);
+
+
+--
+-- Name: turns_turn_55e2df16; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX turns_turn_55e2df16 ON turns_turn USING btree (target_id);
+
+
+--
+-- Name: turns_turn_671380d7; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX turns_turn_671380d7 ON turns_turn USING btree (played_id);
+
+
+--
+-- Name: turns_turn_6c969275; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX turns_turn_6c969275 ON turns_turn USING btree (start_hand_id);
+
+
+--
+-- Name: turns_turn_afe72417; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX turns_turn_afe72417 ON turns_turn USING btree (player_id);
+
+
+--
+-- Name: turns_turn_d469507d; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX turns_turn_d469507d ON turns_turn USING btree (draw_id);
+
+
+--
+-- Name: turns_turn_ecd57eed; Type: INDEX; Schema: public; Owner: schylerhosler
+--
+
+CREATE INDEX turns_turn_ecd57eed ON turns_turn USING btree (phase_id);
+
+
+--
+-- Name: auth_content_type_id_508cf46651277a81_fk_django_content_type_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_content_type_id_508cf46651277a81_fk_django_content_type_id FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissio_group_id_689710a9a73b7457_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_group_id_689710a9a73b7457_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permission_id_1f49ccbbdc69d2fc_fk_auth_permission_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permission_id_1f49ccbbdc69d2fc_fk_auth_permission_id FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user__permission_id_384b62483d7071f0_fk_auth_permission_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user__permission_id_384b62483d7071f0_fk_auth_permission_id FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups_group_id_33ac548dcf5f8e37_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_33ac548dcf5f8e37_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups_user_id_4b5ed4ffdb8fd9b0_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_4b5ed4ffdb8fd9b0_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permiss_user_id_7f0938558328534a_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permiss_user_id_7f0938558328534a_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: djan_content_type_id_697914295151027a_fk_django_content_type_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT djan_content_type_id_697914295151027a_fk_django_content_type_id FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log_user_id_52fdd58701c5f563_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_52fdd58701c5f563_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: games_game_winner_id_229a1d3d8a252d59_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY games_game
+    ADD CONSTRAINT games_game_winner_id_229a1d3d8a252d59_fk_users_user_id FOREIGN KEY (winner_id) REFERENCES users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: phases_phase_game_id_67c59d2927af66f0_fk_games_game_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY phases_phase
+    ADD CONSTRAINT phases_phase_game_id_67c59d2927af66f0_fk_games_game_id FOREIGN KEY (game_id) REFERENCES games_game(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: phases_phase_winner_id_3f2f4637fa93354f_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY phases_phase
+    ADD CONSTRAINT phases_phase_winner_id_3f2f4637fa93354f_fk_users_user_id FOREIGN KEY (winner_id) REFERENCES users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: players_player_game_id_52b3a0e52da1e034_fk_games_game_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY players_player
+    ADD CONSTRAINT players_player_game_id_52b3a0e52da1e034_fk_games_game_id FOREIGN KEY (game_id) REFERENCES games_game(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: players_player_user_id_1ca570d298094c53_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY players_player
+    ADD CONSTRAINT players_player_user_id_1ca570d298094c53_fk_users_user_id FOREIGN KEY (user_id) REFERENCES users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: scores_score_game_id_10799a60de57eaae_fk_games_game_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY scores_score
+    ADD CONSTRAINT scores_score_game_id_10799a60de57eaae_fk_games_game_id FOREIGN KEY (game_id) REFERENCES games_game(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: scores_score_player_id_175019cabce49cf5_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY scores_score
+    ADD CONSTRAINT scores_score_player_id_175019cabce49cf5_fk_users_user_id FOREIGN KEY (player_id) REFERENCES users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: turns_turn_draw_id_247d795344a08ff8_fk_cards_card_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY turns_turn
+    ADD CONSTRAINT turns_turn_draw_id_247d795344a08ff8_fk_cards_card_id FOREIGN KEY (draw_id) REFERENCES cards_card(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: turns_turn_end_hand_id_7e061e45c1bb2b95_fk_cards_card_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY turns_turn
+    ADD CONSTRAINT turns_turn_end_hand_id_7e061e45c1bb2b95_fk_cards_card_id FOREIGN KEY (end_hand_id) REFERENCES cards_card(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: turns_turn_phase_id_462d4c46ec7986ba_fk_phases_phase_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY turns_turn
+    ADD CONSTRAINT turns_turn_phase_id_462d4c46ec7986ba_fk_phases_phase_id FOREIGN KEY (phase_id) REFERENCES phases_phase(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: turns_turn_played_id_1aeb3263eff17c15_fk_cards_card_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY turns_turn
+    ADD CONSTRAINT turns_turn_played_id_1aeb3263eff17c15_fk_cards_card_id FOREIGN KEY (played_id) REFERENCES cards_card(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: turns_turn_player_id_79939f7e39fcb4a5_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY turns_turn
+    ADD CONSTRAINT turns_turn_player_id_79939f7e39fcb4a5_fk_users_user_id FOREIGN KEY (player_id) REFERENCES users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: turns_turn_start_hand_id_10124259e34bba40_fk_cards_card_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY turns_turn
+    ADD CONSTRAINT turns_turn_start_hand_id_10124259e34bba40_fk_cards_card_id FOREIGN KEY (start_hand_id) REFERENCES cards_card(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: turns_turn_target_id_767f85c4390212df_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: schylerhosler
+--
+
+ALTER TABLE ONLY turns_turn
+    ADD CONSTRAINT turns_turn_target_id_767f85c4390212df_fk_users_user_id FOREIGN KEY (target_id) REFERENCES users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
