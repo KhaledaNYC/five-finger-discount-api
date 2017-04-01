@@ -1,4 +1,5 @@
 from django.db import models
+from django.apps import apps
 from users.models import User
 from games.models import Game
 
